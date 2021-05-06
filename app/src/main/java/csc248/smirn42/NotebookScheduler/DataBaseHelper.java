@@ -32,7 +32,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         super(context, "notebook.db", null, 1);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
 

@@ -1,6 +1,7 @@
 package csc248.smirn42.NotebookScheduler;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +38,7 @@ public class DayView extends AppCompatActivity {
         Left = findViewById(R.id.leftImage);
         //get intent
         Intent comingIntent = getIntent();
-         date = getComingIntentExtras(comingIntent);
+        date = getComingIntentExtras(comingIntent);
         day_textView.setText(date);
         String [] str = date.split("-");
         currentDay = str[0];
@@ -58,7 +59,7 @@ public class DayView extends AppCompatActivity {
                     day_textView.setText(date);
                 }
                 catch (ParseException e) {
-                    e.printStackTrace();
+                   e.printStackTrace();
                 }
                 FillListView(currentDay , currentMonth , currentYear);
             }
@@ -93,11 +94,18 @@ public class DayView extends AppCompatActivity {
 
     private String getComingIntentExtras(Intent intent){
 
-       String dayOfMonth =intent.getStringExtra("date");
-        return dayOfMonth;
+      String dayOfMonth =intent.getStringExtra("date");
+      return dayOfMonth;
     }
     private void FillListView(String dayOfMonth , String month , String year){
-        ArrayList<Event> arrayOfEvents = DataBaseWithUI.ListOfEvents(dayOfMonth , month , year);
+        DataBaseWithUI dataBaseWithUI = new DataBaseWithUI(getApplicationContext());
+        ArrayList<Event> arrayOfEvents = dataBaseWithUI.ListOfEvents(dayOfMonth , month , year);
+        DummyData d = new DummyData();
+        ArrayList<Event> arrayOfevents = new ArrayList<>();
+        //tests
+        Event event = new Event("algo" , Color.GREEN , false);
+
+        arrayOfevents.add(event);
         if(arrayOfEvents != null) {
             eventsAdapter adapter = new eventsAdapter(csc248.smirn42.NotebookScheduler.DayView.this, arrayOfEvents);
             listView.setAdapter(adapter);
